@@ -34,6 +34,7 @@ class PlaneWar(object):
         self.screen = pygame.display.set_mode((self.width, self.height))
         # 加载背景图片
         self.bg = pygame.image.load(constants.BG_IMG)
+        self.bg_over = pygame.image.load(constants.BG_IMG_OVER)
         # 游戏标题
         self.img_game_title = pygame.image.load(constants.IMG_GAME_TITLE)
         self.img_game_title_rect = self.img_game_title.get_rect()
@@ -120,9 +121,13 @@ class PlaneWar(object):
                 # 绘制背景
                 self.screen.blit(self.bg, self.bg.get_rect())
                 # 绘制飞机
-                self.our_plane.update(self.frame)
+                self.our_plane.update(self)
                 # 绘制子弹
-                self.our_plane.bullets.update()
+                self.our_plane.bullets.update(self)
                 # 绘制敌方飞机
                 self.small_enemies.update()
+            elif self.status == self.OVER:
+                # 游戏背景
+                self.screen.blit(self.bg_over, self.bg_over.get_rect())
+                # 分数统计
             pygame.display.flip()

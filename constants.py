@@ -13,6 +13,7 @@ ASSETS_DIR = os.path.join(BASE_DIR, 'assets')
 # 背景图片
 BG_IMG = os.path.join(ASSETS_DIR, 'images\\background.png')
 BG_IMG_READY = os.path.join(ASSETS_DIR, 'images\\background.png')
+BG_IMG_OVER= os.path.join(ASSETS_DIR, 'images\\game_over.png')
 # 标题图片
 IMG_GAME_TITLE = os.path.join(ASSETS_DIR, 'images\\game_title.png')
 # 开始按钮

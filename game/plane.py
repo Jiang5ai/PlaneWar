@@ -100,12 +100,24 @@ class OurPlane(Plane):
     # 坠毁的音乐地址
     down_sound_src = None
 
-    def update(self, frame):
+    def update(self, war):
         """更新飞机的动画效果"""
-        if frame % 5 == 0:
+        # 切换飞机的动画效果，喷气式效果
+        if war.frame % 5 == 0:
             self.screen.blit(self.img_list[0], self.rect)
         else:
             self.screen.blit(self.img_list[1], self.rect)
+        # 飞机撞击检测
+        rest = pygame.sprite.spritecollide(self, war.enemies, False)
+        if rest:
+            # 游戏结束
+            war.status = war.OVER
+            # 敌方飞机清除
+            war.enemies.empty()
+            war.small_enemies.empty()
+            # 我方飞机坠毁
+            self.broken_down()
+            # 统计分数
 
     def move_up(self):
         """向上移动，超出范围后，重置"""
@@ -145,7 +157,7 @@ class OurPlane(Plane):
 
 
 class SmallEnemyPlane(Plane):
-    """地方的小型飞机"""
+    """敌方的小型飞机"""
     # 飞机的图片
     plane_images = constants.SMALL_ENEMY_PLANE_IMG_LIST
     # 飞机爆炸的图片
@@ -181,3 +193,9 @@ class SmallEnemyPlane(Plane):
         """重置飞机得状态，达到复用的效果"""
         self.active = True
         self.init_pos()
+
+    def break_down(self):
+        """飞机爆炸"""
+        super().broken_down()
+        # 重复利用飞机对象
+        self.reset()
