@@ -46,3 +46,4 @@ class Bullet(pygame.sprite.Sprite):
             # 飞机爆炸坠毁
             r.break_down()
             # 统计游戏成绩
+            war.rest.score += constants.SCORE_SHOOT_SMALL

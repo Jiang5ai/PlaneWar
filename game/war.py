@@ -7,6 +7,7 @@ import pygame
 import sys
 import constants
 from game.plane import OurPlane, SmallEnemyPlane
+from store.result import PlayRest
 
 
 class PlaneWar(object):
@@ -24,6 +25,8 @@ class PlaneWar(object):
     small_enemies = pygame.sprite.Group()
     enemies = pygame.sprite.Group()
     clock = pygame.time.Clock()
+    # 实例化游戏结果
+    rest = PlayRest()
 
     def __init__(self):
         # 初始化
@@ -50,6 +53,9 @@ class PlaneWar(object):
         self.btn_width, self.btn_height = self.btn_start.get_size()
         self.btn_start_rect.topleft = (int((self.width - self.btn_width) / 2),
                                        int(self.height / 2 + self.btn_height + 20))
+
+        # 游戏文字对象
+        self.score_font = pygame.font.SysFont('kaiti', 50)
 
         # 加载背景音乐
         # pygame.mixer.music.load(constants.BG_MUSIC)
@@ -126,8 +132,18 @@ class PlaneWar(object):
                 self.our_plane.bullets.update(self)
                 # 绘制敌方飞机
                 self.small_enemies.update()
+                # 绘制游戏分数
+                score_text = self.score_font.render("得分:{}".format(self.rest.score), False, constants.TEXT_SOCRE_COLOR)
+                self.screen.blit(score_text, score_text.get_rect())
             elif self.status == self.OVER:
+                # 游戏结束
                 # 游戏背景
                 self.screen.blit(self.bg_over, self.bg_over.get_rect())
                 # 分数统计
+                # 绘制本次总分数
+                score_text = self.score_font.render("{}".format(self.rest.score), False, constants.TEXT_SOCRE_COLOR)
+                score_text_rect = score_text.get_rect()
+                text_w, text_h = score_text.get_size()
+                score_text_rect.topleft = (int((self.width - text_w) / 2), int(self.height / 2))
+                self.screen.blit(score_text, score_text_rect)
             pygame.display.flip()

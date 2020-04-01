@@ -4,6 +4,7 @@
 # @File    : constants.py
 # @Software: PyCharm
 import os
+import pygame
 
 # 获取项目的根目录 F:\chapter12
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -13,13 +14,17 @@ ASSETS_DIR = os.path.join(BASE_DIR, 'assets')
 # 背景图片
 BG_IMG = os.path.join(ASSETS_DIR, 'images\\background.png')
 BG_IMG_READY = os.path.join(ASSETS_DIR, 'images\\background.png')
-BG_IMG_OVER= os.path.join(ASSETS_DIR, 'images\\game_over.png')
+BG_IMG_OVER = os.path.join(ASSETS_DIR, 'images\\game_over.png')
 # 标题图片
 IMG_GAME_TITLE = os.path.join(ASSETS_DIR, 'images\\game_title.png')
 # 开始按钮
 IMG_GAME_START_BTN = os.path.join(ASSETS_DIR, 'images\\game_start.png')
 # 背景音乐
 BG_MUSIC = os.path.join(ASSETS_DIR, 'sounds\\game_bg_music.mp3')
+# 游戏分数颜色
+TEXT_SOCRE_COLOR = pygame.Color(255, 255, 0)
+# 击中小型飞机的分数
+SCORE_SHOOT_SMALL = 10
 
 # 我方飞机的静态资源
 OUR_PLANE_IMG = [os.path.join(ASSETS_DIR, 'images\\hero1.png'), os.path.join(ASSETS_DIR, 'images\\hero2.png')]
