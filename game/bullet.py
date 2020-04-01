@@ -47,3 +47,4 @@ class Bullet(pygame.sprite.Sprite):
             r.break_down()
             # 统计游戏成绩
             war.rest.score += constants.SCORE_SHOOT_SMALL
+            war.rest.set_history()

@@ -19,14 +19,14 @@ class PlaneWar(object):
     status = READY
     # 实例化我方飞机
     our_plane = None
+    # # 实例化游戏结果
+    # rest = None
     # 播放帧数
     frame = 0
     # 一架飞机可以属于多个精灵组
     small_enemies = pygame.sprite.Group()
     enemies = pygame.sprite.Group()
     clock = pygame.time.Clock()
-    # 实例化游戏结果
-    rest = PlayRest()
 
     def __init__(self):
         # 初始化
@@ -65,12 +65,14 @@ class PlaneWar(object):
         pygame.display.set_caption('飞机大战')
         # 我方飞机对象
         self.our_plane = OurPlane(self.screen, speed=20)
-
+        # 实例化游戏结果
+        self.rest = PlayRest()
         self.clock = pygame.time.Clock()
+        # 上次按的键盘的某一个键
+        self.key_down = None
 
     def bind_event(self):
         """绑定事件"""
-
         # 监听事件
         for event in pygame.event.get():
             # 退出游戏
@@ -82,8 +84,14 @@ class PlaneWar(object):
                 # 游戏正在准备中，点击才能进入游戏
                 if self.status == self.READY:
                     self.status = self.PLAYING
+                # 游戏结束后，鼠标点击可以继续进行游戏
+                elif self.status == self.OVER:
+                    self.status = self.READY
+                    self.add_small_enemies(6)
+                    self.rest.score = 0
             elif event.type == pygame.KEYDOWN:
                 # 键盘事件
+                self.key_down = event.key
                 # 游戏正在进行中，才需要控制键盘
                 if self.status == self.PLAYING:
                     if event.key == pygame.K_w or event.key == pygame.K_UP:
@@ -122,6 +130,7 @@ class PlaneWar(object):
                 self.screen.blit(self.img_game_title, self.img_game_title_rect)
                 # 开始按钮
                 self.screen.blit(self.btn_start, self.btn_start_rect)
+                self.key_down = None
             elif self.status == self.PLAYING:
                 # 游戏进行中
                 # 绘制背景
@@ -146,4 +155,8 @@ class PlaneWar(object):
                 text_w, text_h = score_text.get_size()
                 score_text_rect.topleft = (int((self.width - text_w) / 2), int(self.height / 2))
                 self.screen.blit(score_text, score_text_rect)
+                # 历史最高分
+                score_his = self.score_font.render('{}'.format(self.rest.get_max_score()), False,
+                                                   constants.TEXT_SOCRE_COLOR)
+                self.screen.blit(score_his, (150, 30))
             pygame.display.flip()

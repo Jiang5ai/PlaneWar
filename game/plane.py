@@ -102,6 +102,7 @@ class OurPlane(Plane):
 
     def update(self, war):
         """更新飞机的动画效果"""
+        self.move(war.key_down)
         # 切换飞机的动画效果，喷气式效果
         if war.frame % 5 == 0:
             self.screen.blit(self.img_list[0], self.rect)
@@ -118,6 +119,17 @@ class OurPlane(Plane):
             # 我方飞机坠毁
             self.broken_down()
             # 统计分数
+
+    def move(self, key):
+        """飞机移动自动控制"""
+        if key == pygame.K_w or key == pygame.K_UP:
+            self.move_up()
+        elif key == pygame.K_s or key == pygame.K_DOWN:
+            self.move_down()
+        elif key == pygame.K_a or key == pygame.K_LEFT:
+            self.move_left()
+        elif key == pygame.K_d or key == pygame.K_RIGHT:
+            self.move_right()
 
     def move_up(self):
         """向上移动，超出范围后，重置"""

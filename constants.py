@@ -46,3 +46,6 @@ SMALL_ENEMY_DESTROY_IMG_LIST = [
     os.path.join(ASSETS_DIR, 'images\\enemy1_down1.png'),
     os.path.join(ASSETS_DIR, 'images\\enemy1_down1.png')]
 SMALL_ENEMY_PLANE_DOWN_SOUND = os.path.join(ASSETS_DIR, 'sounds\\enemy1_down.wav')
+
+# 游戏结果存储的文件地址
+PLAY_RESULT_STORE_FILE = os.path.join(BASE_DIR, 'store\\rest.txt')
